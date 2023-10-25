@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ұқсас табу</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body style="background-image: url(./assets/bac.jpg);"  >
+    <div class="container">
+        <h2>Ұқсас табу</h2>
+        <div class="game"></div>
+        <button class="reset" onclick="window.location.reload();">Ойынды қалпына келтіру</button>
+    </div>
+
+    <ul>
+        <li><a href="superindex.html"><i class="icon fas fa-gamepad"></i> Артқа қайту</a></li>
+    </ul>
+    
+    <script>
+        const emojis =["🥳","🥳","🤗","🤗","😡","😡","😎","😎","😉","😉","😍","😍","🥒","🥒","🌕","🌕"];
+        var shuf_emojis = emojis.sort(() => (Math.random() > 0.5) ? 2 : -1);
+
+        for (var i = 0; i < emojis.length; i++) {
+            let box = document.createElement('div')
+            box.className='item';
+            box.innerHTML = shuf_emojis[i]
+
+            box.onclick = function () {
+                this.classList.add('boxOpen');
+                setTimeout(function () {
+                    var openBoxes = document.querySelectorAll('.boxOpen');
+                    if (openBoxes.length > 1) {
+                        if (openBoxes[0].innerHTML === openBoxes[1].innerHTML) {
+                            openBoxes[0].classList.add('boxMatch');
+                            openBoxes[1].classList.add('boxMatch');
+                            openBoxes[1].classList.remove('boxOpen');
+                            openBoxes[0].classList.remove('boxOpen');
+
+                            if (document.querySelectorAll('.boxMatch').length === emojis.length) {
+                                alert('You Win!');
+                            }
+                        } else {
+                            openBoxes[1].classList.remove('boxOpen');
+                            openBoxes[0].classList.remove('boxOpen');
+                        }
+                    }
+                }, 500);
+            };
+
+            document.querySelector('.game').appendChild(box);
+        }
+    </script>
+</body>
+</html>
